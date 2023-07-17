@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="menu-container">
+            <div class="company-logo">
+                <!--your company logo below-->
+                <!--<img src="/assets/logo.png">-->
+            </div>
+        </div>
+        <div class="inst-dropdown-container">
+            <h2>Instructions</h2>
+
+            <button class="inst-dropdown">How to insert a date time string</button>
+            <div class="dropdown-content">To insert a date time string in the Zendesk comment field, <em>left click</em> inside the comment box and press ctrl + enter</div>
+            
+            <button class="inst-dropdown">How to generate a timeline</button>
+            <div class="dropdown-content"><em>Right click</em> inside the Zendesk comment field and from the context menu, select "Generate Timeline".  Please note this only collects comments that begin with the MM/DD/YY hh:mm: format</div>
+
+            <button class="inst-dropdown">Why isn't my timeline generating?</button>
+            <div class="dropdown-content"><p>There can be a few reasons for this.</p>  
+                <ul>
+                    <li>There are no date time tags in the correct format (MM/DD/YY hh:mm:)</li>
+                    <li>The generate timeline function timed out
+                        <ul>
+                            <li>
+                                After right clicking into Zendesk's text box there is a backend timer that starts.  After five seconds, the timeline process exits and the timeline cannot be created.
+                            </li>
+                            <li>
+                                This does not prevent the timeline function from running again.  It only prevents it for that particular right click.
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            
+            <button class="inst-dropdown">How to omit a record from the timeline</button>
+            <div class="dropdown-content">Comments beginning with a tilde character (~) will be omitted from the timeline.  <br/>i.e. 01/01/24 14:13: ~comment</div>
+        </div>
+        <script src="./popup.js" type="module" ></script>
+    </body>
+</html>

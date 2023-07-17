@@ -1,0 +1,64 @@
+/*
+    Style sheet for the DateTimeTagger extension UI
+*/
+body{
+  border: 1em hidden;
+  padding: 2em;
+  margin: 1em;
+}
+.menu-container{
+    margin: 2em;
+    padding: 2em;
+    border: 1.5em;
+}
+
+.menu-container .company-logo img{
+    max-width: 24em;
+    max-height: 8em;
+}
+.inst-dropdown-container{
+  /*flexbox*/
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.inst-dropdown{
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+.active, .inst-dropdown:hover{
+  background-color: #ccc;
+}
+
+.inst-dropdown:after {
+  content: '\002B';
+  color: #777;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+.dropdown-content {
+  padding: 0 18px;
+  font-size: 1.3em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
