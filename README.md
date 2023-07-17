@@ -52,9 +52,7 @@ Have IT deploy to chrome browser
 
 ## Errors
 
-Please report all errors so they can be logged and fixed if applicable.
-
-If the extension stops working or has unexpected behavior, go back to the "Extensions" page in Chrome.  Find the Zendesk Date Time Tool extension and see if there is an "Error" notification on the bottom of the extension. If there is an error, click on the "Error" button to go to the description.  From here copy and paste all errors into a .txt file and screen shot the error description.  Also document what was done beforehand.
+This extension comes with no support.
 
 ## To-Dos
 
@@ -62,12 +60,13 @@ If the extension stops working or has unexpected behavior, go back to the "Exten
 - [] Improve performace
 - [] Refactor to improve readability
 - [] Have timeline generator execute once and only once without the timer to cancel an unfired message 
+- [] Add ability to select timezone for datetime formatting
 - [x] Implement a "timeline" or "Export" feature that collects all of the date time strings and their data
 - [x] Implement an "exclusion" feature that excludes certain date time strings from the timeline report
 - [x] Fix issue where caret does not move to the end of the string when the textarea first loads
 - [x] Fix record duplication when creating timeline
 
 ## Versions
-1.0.0 -  Implemented basic functionality
-1.0.1 -  Generated extension ID and added to script.js/generateTimeline()
-1.1.2 -  Added ability to omit records from timeline.  Fixed duplicate comments in timeline
+- 1.0.0 -  Implemented basic functionality
+- 1.0.1 -  Generated extension ID and added to script.js/generateTimeline()
+- 1.1.2 -  Added ability to omit records from timeline.  Fixed duplicate comments in timeline
