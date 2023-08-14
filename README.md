@@ -1,10 +1,11 @@
 # Zendesk Date Time Tool
 
-Date Time Tool inserts a date time string into the textarea of a Zendesk ticket on a given keypress.  The extension also generates a timeline from the date time tags.
+Date Time Tool inserts a date time string into the textarea of a Zendesk ticket on a given keypress.  
+The extension also generates a timeline from the date time tags.
 
 ## How to install the Date Time Tool Chrome Extension for ZenDesk
 
-Have IT deploy to chrome browser
+Have IT deploy to chrome browser, load as an unpacked extension, or generate a .crx file.
 
 ## Instructions for use
 
@@ -31,28 +32,6 @@ Have IT deploy to chrome browser
 3. Select "Remove"
 
 4. Confirm the removal when prompted by Chrome
-
-## Known Issues
-
-1. ~~When a ticket is first loaded the caret (cursor) will not move to the end of the date time string.  Once a string or character is input into the textarea this issue goes away.~~
-   - Fixed by Jacob West 
-
-2. ~~The 'Generate Timeline' feature executes as many times as the user right clicks before selecting "Generate Timeline"~~
-   - Fixed
-
-3. ~~The 'Generate Timeline' Feature executes in tickets when the user generates a timeline in another ticket~~
-	- Fixed
-
-4. ~~Date Time Tags entered by the user will follow system time instead of EST~~
-   - Fixed by Jacob West 
-
-5. ~A generated timeline contains duplicate comments when a comment appears more than twice~
-   - Fixed
-
-
-## Errors
-
-This extension comes with no support.
 
 ## To-Dos
 
