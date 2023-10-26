@@ -4,6 +4,10 @@ function Record(tag, comment){
    this.comment = comment;
 }
 
+Record.prootype.printRecord = function(){
+   return this.tag + '\s' + this.comment;
+}
+
 function generateTimeline(editingArea)
 {
    chrome.runtime.sendMessage("YOUR_EXTENSION_ID", "UPDATE", function(response) {
@@ -20,7 +24,7 @@ function generateTimeline(editingArea)
             for(record of uniqueRecords) {
                const paragraph = writer.createElement('paragraph');
                writer.append(paragraph, editorInstance.model.document.getRoot());
-               const textNode = writer.createText(record.tag + ' ' + record.comment);
+               const textNode = writer.createText(record.printRecord());
                writer.append(textNode, paragraph);
             }
          });
