@@ -1,8 +1,12 @@
 
+function Record(tag, comment){
+   this.tag = tag;
+   this.comment = comment;
+}
 
 function generateTimeline(editingArea)
 {
-   chrome.runtime.sendMessage("nmkeddobbgmklaojjmkimpaffccencgn", "UPDATE", function(response) {
+   chrome.runtime.sendMessage("YOUR_EXTENSION_ID", "UPDATE", function(response) {
       
       if(response === "UPDATED")
       {
@@ -13,15 +17,14 @@ function generateTimeline(editingArea)
                   
          const editorInstance = editingArea.ckeditorInstance;
          editorInstance.model.change(writer => {
-            for(record of uniqueRecords)
-            {
+            for(record of uniqueRecords) {
                const paragraph = writer.createElement('paragraph');
                writer.append(paragraph, editorInstance.model.document.getRoot());
                const textNode = writer.createText(record.tag + ' ' + record.comment);
                writer.append(textNode, paragraph);
             }
          });
-         chrome.runtime.sendMessage("nmkeddobbgmklaojjmkimpaffccencgn", "FINISHED");
+         chrome.runtime.sendMessage("YOUR_EXTENSION_ID", "FINISHED");
       }
       if(response === "TIMEOUT")
       {
@@ -30,7 +33,6 @@ function generateTimeline(editingArea)
    });
 }
 
-//clbcolmebfdinahpkodjbiifcpeobcik
 document.addEventListener('mouseup', function(e) {
    if(this.activeElement.getAttribute("role") === "textbox" && this.activeElement.getAttribute("aria-label") === "Rich Text Editor. Editing area: main")
    {
@@ -46,19 +48,13 @@ document.addEventListener('mouseup', function(e) {
 /*
    Timeline Creation Logic Below
 */
-
-/**
- * 
- * @param {The current unsorted array containing dateTimeRecordObjects} dateTimeRecords 
- * @returns An array of date time records 
- */
 function removeDuplicateRecords(dateTimeRecords)
 {
    let retArray = [];
 
    for(let i = 0; i < dateTimeRecords.length; i++)
    {
-      if(!retArray.find(({comment})=> comment === dateTimeRecords[i].comment))
+      if(!retArray.find(({comment})=> comment.toLowerCase() === dateTimeRecords[i].comment.toLowerCase()))
       {
          retArray.push(dateTimeRecords[i]);
       }
@@ -72,6 +68,7 @@ function dateComparator(firstRecord, secondRecord)
    // remove the trailing ':' from the tag string and create a new date object for comparison
    let firstRecordDate = new Date(Date.parse(firstRecord.tag.slice(0, firstRecord.tag.lastIndexOf(':'))));
    let secondRecordDate = new Date(Date.parse(secondRecord.tag.slice(0, secondRecord.tag.lastIndexOf(':'))));
+
    return firstRecordDate - secondRecordDate;
 }
 
@@ -95,11 +92,10 @@ function createDateTimeRecords(zdComment)
 
    while(index < dtTags.length)
    {
-      let currentTag = dtTags[index];
       // string representation of the date time tag 
-      let tagString = currentTag[0];
+      let tagString = dtTags[index][0];
       // calculate the total space in the raw string for the record
-      let tagLengthOffset = tagString.length + currentTag.index; 
+      let tagLengthOffset = tagString.length + dtTags[index].index; 
       // variable to store the comments between date time tags
       let commentString;
 
@@ -116,10 +112,10 @@ function createDateTimeRecords(zdComment)
       // don't build an object with an empty comment
       if(commentString.length > 0 && commentString !== null && commentString[0] != OMIT_RECORD_CHAR)
       {
-         commentString = commentString.replace(/\s+/g, " ");       // remove excessive spaces from comment
-         dateTimeRecords.push({tag:tagString, comment: commentString});
+         commentString = commentString.replace(/\s+/g, ' '); // remove excessive spaces from comment
+         dateTimeRecords.push(new Record(tagString, commentString));
       }
-      index++
+      index++;
    }
    return dateTimeRecords;
 }
@@ -132,32 +128,25 @@ function createDateTimeRecords(zdComment)
 
 function getInternalCommentTextNodes(editingArea)
 {
-
-   let eventContainer = editingArea;
-
    // Grab parent nodes until "pane_body section"
-   while(eventContainer.className !== 'pane_body section')
+   while(editingArea.className !== 'pane_body section')
    {
-      eventContainer = eventContainer.parentNode;
+      editingArea = editingArea.parentNode;
    }
-   // Grab the parent node "rich-text"
-   eventContainer = eventContainer.parentNode;
-
    // Grab "event-container" 
-   eventContainer = eventContainer.querySelector('.event-container');
+   let eventContainer = editingArea.parentNode.querySelector('.event-container');
 
    // check to see if the first element is the internal comments 
    if(eventContainer.firstElementChild.className === 'ember-view audits')
    {   
       const dateTimeRecordObjects = []; // container for date time record objects
-
-      const emberViewAudit = eventContainer.firstElementChild; // DOM element ember-view audits contain all of the ticket comments and events
       
-      const internalCommentDivs = emberViewAudit.querySelectorAll("div[class='ember-view event web regular']");
+      const internalCommentDivs = eventContainer.firstElementChild.querySelectorAll("div[class='ember-view event web regular']");
 
       for(let i = internalCommentDivs.length-1; i >= 0; i--)
       {
          let record = createDateTimeRecords(internalCommentDivs[i].querySelector('.zd-comment'));
+         
          if(!Array.isArray(record))
          {
             if(typeof record !== 'undefined')
@@ -172,7 +161,6 @@ function getInternalCommentTextNodes(editingArea)
             }
          }         
       }
-      
       return dateTimeRecordObjects;
    }
    return null;
